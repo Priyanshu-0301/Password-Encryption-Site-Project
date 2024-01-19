@@ -1,0 +1,50 @@
+/.vscode
+
+# ignore the node-module in the root directory
+/node_modules
+
+#ignore the modules in server directory
+/server/node_modules
+
+#ignore the modules in client directory
+/client/node_modules
+
+#ignore the modules in public directory
+/public/node_modules
+# anything else to ignore?
+
+/client/src/LoginAssets
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Build and compiled files
+/build/
+/dist/
+/out/
+
+# IDE-specific directories
+.idea/
+.vscode/
+

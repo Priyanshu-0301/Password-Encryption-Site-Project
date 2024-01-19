@@ -1,0 +1,8 @@
+we have two folders
+
+client -- will handle the frontend
+server -- will handle the express server
+
+// lets creat the components now
+// Remember files which are in different routes/pages
+we need to create routes fot them using react routers
