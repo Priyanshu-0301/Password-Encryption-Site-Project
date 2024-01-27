@@ -1,7 +1,7 @@
 // dependecies
 const express = require('express');
 const app = express();
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const cors = require('cors');
 
 // use cors and json other wise data will not be sent to the server
@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(cors());
 
 // Running the server
-app.listen(3001, () => {
-    console.log('Server is running on port 3001');
+app.listen(3002, () => {
+    console.log('Server is running on port 3002');
 })
 
 //Create database
@@ -29,27 +29,40 @@ app.post('/register', (req, res) => {
     console.log('Received data:', sentEmail, sentUsername, sentPassword);
 
     const SQL = 'INSERT INTO users (email, username, password) VALUES (?, ?, ?)';
-    const values = [sentEmail, sentUsername, sentPassword];
+    const Values = [sentEmail, sentUsername, sentPassword];
 
-    db.query(SQL, values, (err, result) => {
+    db.query(SQL, Values, (err, results) => {
         if (err) {
-            console.error('SQL Error:', err);
-            res.status(500).send({ error: 'Error registering user' });
+            // console.error('SQL Error:', err);
+            // res.status(500).send({ error: 'Error registering user' });
+            res.send({ error: err });
         } else {
             console.log('User registered successfully');
-            res.send({ message: 'User registered' });
+            // res.send({ message: 'User registered' });
         }
     });
 });
+// successfull
 
-// Create another route for login page so that  registered user can log in
+//Let us create a rout to the server that will login a user
 app.post('/login', (req, res) => {
-    const sentEmail = req.body.Email;
-    const sentUsername = req.body.Username;
-    const sentPassword = req.body.Password;
+    const sentLoginUsername = req.body.LoginUsername;
+    const sentLoginPassword = req.body.LoginPassword;
 
-    console.log('Received data:', sentEmail, sentUsername, sentPassword);
+    console.log('Received data:', sentLoginUsername, sentLoginPassword);
 
-    const SQL = 'INSERT INTO users (email, username, password) VALUES (?, ?, ?)'
-    const VALUES = [sentEmail, sentUsername, sentPassword];
+    const SQL = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    const Values = [sentLoginUsername, sentLoginPassword];
+
+    db.query(SQL, Values, (err, results) => {
+        if (err) {
+            
+            res.send({ error: err });
+        }
+        if(results.length > 0){
+            res.send(results);
+        }else{
+            res.send({message: "Wrong username/password combination!"});
+        }
+    });
 });

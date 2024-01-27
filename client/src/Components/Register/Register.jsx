@@ -9,22 +9,30 @@ import {BsFillShieldLockFill} from "react-icons/bs";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import { MdMarkEmailRead } from "react-icons/md";
 import Axios from "axios";  // Axios is used to create API that connects to the server
-
+import {useNavigate} from "react-router-dom";
+import { MdSettings } from "react-icons/md";
 const Register = () => {
    const[email,setEmail] = useState('');
    const[username,setUsername] = useState('');
    const[password,setPassword] = useState('');
-  
+   const navigateTo = useNavigate();
   // onClick we want the data that user has given in the page
-  const creatUser = ()=>{
+  const creatUser = (e)=>{
+    e.preventDefault();
     // We need Axios to create API that connects to the server
-    Axios.post('http://localhost:3001/register',{
+    Axios.post('http://localhost:3002/register',{
       //create variable to send to the server
       Email : email,
       Username: username,
       Password : password,
     }).then(()=>{
-      console.log('User has been created');
+      // console.log('User has been created');
+      // NAvigate to login page once registereda
+      alert('Registration Successfull')
+      navigateTo('/');
+      setEmail('');
+      setUsername('');
+      setPassword('');
     })
   }
 
@@ -64,7 +72,7 @@ const Register = () => {
               <label htmlFor="username">Username</label>
               <div className="input flex">
                 <FaUserShield className="icon" />
-                <input type="text" id="username" placeholder="Enter Username" onChange={(event)=>{
+                <input type="text" id="username" placeholder="Enter Username" onChange={event=>{
                   setUsername(event.target.value)
                 }}/>
               </div>
